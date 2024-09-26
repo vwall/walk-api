@@ -4,6 +4,9 @@ class User < ApplicationRecord
 
   enum :role, { member: 0, walker: 1 }
 
+  has_many :dogs, foreign_key: :owner_id, dependent: :destroy
+
+  validates :name, presence: true
   validates_inclusion_of :role, in: User.roles.keys
 
   validates :email,

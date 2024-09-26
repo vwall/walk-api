@@ -9,6 +9,9 @@ print 'Creating 120 users with dogs...'
       password: SecureRandom.base58(24),
     )
 
+  # Dogs
+  dog = Dog.create!(name: Faker::Creature::Dog.name, owner: user)
+
   print '.'
 end
 
