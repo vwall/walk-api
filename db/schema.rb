@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_26_145332) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_26_145723) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.citext "email", null: false
+    t.string "name", limit: 255, null: false
+    t.integer "role", default: 0
+    t.boolean "manager", default: false
+    t.string "password_digest", null: false
+    t.string "auth_token", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["auth_token"], name: "index_users_on_auth_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
 end
