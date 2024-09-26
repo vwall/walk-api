@@ -1,0 +1,3 @@
+--print-width=105
+--plugins=plugin/trailing_comma
+--plugins=plugin/single_quotes
