@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_09_26_150433) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_27_193651) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -23,6 +23,33 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_26_150433) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["owner_id"], name: "index_dogs_on_owner_id"
+  end
+
+  create_table "schedules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "day", null: false
+    t.integer "time_of_day", null: false
+    t.uuid "dog_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dog_id"], name: "index_schedules_on_dog_id"
+  end
+
+  create_table "shift_assignments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "status"
+    t.uuid "shift_id"
+    t.uuid "dog_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dog_id"], name: "index_shift_assignments_on_dog_id"
+    t.index ["shift_id"], name: "index_shift_assignments_on_shift_id"
+  end
+
+  create_table "shifts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "day"
+    t.uuid "walker_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["walker_id"], name: "index_shifts_on_walker_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -39,4 +66,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_09_26_150433) do
   end
 
   add_foreign_key "dogs", "users", column: "owner_id"
+  add_foreign_key "schedules", "dogs"
+  add_foreign_key "shift_assignments", "dogs"
+  add_foreign_key "shift_assignments", "shifts"
+  add_foreign_key "shifts", "users", column: "walker_id"
 end

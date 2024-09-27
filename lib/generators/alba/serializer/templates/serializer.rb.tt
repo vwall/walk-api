@@ -1,0 +1,6 @@
+# app/serializers/<%= file_name %>_serializer.rb
+class <%= class_name %>Serializer
+  include Alba::Resource
+
+  attributes <%= attributes_list.map { |attr| ":#{attr}" }.join(', ') %>
+end

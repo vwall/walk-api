@@ -12,6 +12,8 @@ print 'Creating 120 users with dogs...'
   # Dogs
   dog = Dog.create!(name: Faker::Creature::Dog.name, owner: user)
 
+  Schedules::Assign.call(dog: dog, time_of_day: rand(3), day: :friday)
+
   print '.'
 end
 
@@ -24,3 +26,5 @@ User.create!(
   manager: true,
   password: 'hellothere',
 )
+
+puts

@@ -5,6 +5,8 @@ class User < ApplicationRecord
   enum :role, { member: 0, walker: 1 }
 
   has_many :dogs, foreign_key: :owner_id, dependent: :destroy
+  has_many :shifts, foreign_key: :walker_id, dependent: :destroy
+  has_many :shift_assignments, through: :shifts
 
   validates :name, presence: true
   validates_inclusion_of :role, in: User.roles.keys
