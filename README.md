@@ -5,20 +5,16 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+- Ruby version: 3.3.5
 
-* System dependencies
+- Database creation
 
-* Configuration
+```
+rails db:create db:migrate db:seed
+```
 
-* Database creation
+- Run the rails server
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
+rails s -p 9000
+```
